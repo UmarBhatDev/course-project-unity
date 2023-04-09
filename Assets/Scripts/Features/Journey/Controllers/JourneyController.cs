@@ -4,6 +4,7 @@ using Bootstrap.CanvasBootstrap.Data;
 using Cysharp.Threading.Tasks;
 using Features.Roadmap.Data;
 using Features.Win;
+using UniRx;
 
 namespace Features.Journey.Controllers
 {
@@ -12,10 +13,12 @@ namespace Features.Journey.Controllers
         private readonly Stage _stage;
         private readonly WinViewFactory _winViewFactory;
 
+        private readonly CompositeDisposable _compositeDisposable;
         public JourneyController(Stage stage, WinViewFactory winViewFactory)
         {
             _stage = stage;
             _winViewFactory = winViewFactory;
+            _compositeDisposable = new CompositeDisposable();
         }
 
         public async UniTask Play(CancellationToken cancellationToken)
@@ -31,6 +34,7 @@ namespace Features.Journey.Controllers
             if (_view == null)
             {
                 _view = _winViewFactory.Create();
+                _view.AddTo(_compositeDisposable);
             }
 
             return _view.ButtonTapped;
@@ -38,6 +42,7 @@ namespace Features.Journey.Controllers
 
         public void Dispose()
         {
+            _compositeDisposable.Dispose();
         }
     }
 }

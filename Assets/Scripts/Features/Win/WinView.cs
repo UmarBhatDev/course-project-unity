@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Features.Win
 {
-    public class WinView : MonoBehaviour
+    public class WinView : MonoBehaviour, IDisposable
     {
         [SerializeField] private Button _winButton;
 
@@ -21,6 +21,11 @@ namespace Features.Win
         private void SetButtonTappedTrue()
         {
             ButtonTapped = true;
+        }
+
+        public void Dispose()
+        {
+            Destroy(gameObject);
         }
     }
 }
