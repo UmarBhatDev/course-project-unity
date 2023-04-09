@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcbf3d870e1e4ca4bb83cca0206f00ee, type: 3}
+  m_Name: ViewRegistry
+  m_EditorClassIdentifier: 
+  _gamePlayCanvas: {fileID: 7529875063150994278, guid: daa87f8e93e00e74593ea59353c7429e, type: 3}
+  _mainMenuPanel: {fileID: 5035008041001557487, guid: d6cc2842c92a2f14fb1ab3a18bce294d, type: 3}
+  _winView: {fileID: 7066534819907756974, guid: c8bdd73f063770644a448b2768990259, type: 3}
