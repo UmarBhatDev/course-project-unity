@@ -39,12 +39,19 @@ namespace Features.Journey.Controllers
         private bool ShouldExit()
         {
             if (_view != null) 
-                return _view.ButtonTapped;
+                return _view.ButtonTapped || _levelCompletionRequested;
             
             _view = _winViewFactory.Create();
             _view.AddTo(_compositeDisposable);
 
-            return _view.ButtonTapped;
+            return _view.ButtonTapped || _levelCompletionRequested;
+        }
+
+        private bool _levelCompletionRequested = false;
+
+        public void RequestLevelCompletion()
+        {
+            _levelCompletionRequested = true;
         }
 
         public void Dispose()

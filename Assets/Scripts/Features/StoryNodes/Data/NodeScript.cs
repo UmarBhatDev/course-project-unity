@@ -17,7 +17,6 @@ namespace Features.StoryNodes.Data
 
         public void Play()
         {
-            Debug.Log("Running");
         }
     }
 }
