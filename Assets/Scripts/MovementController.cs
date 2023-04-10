@@ -63,8 +63,8 @@ public class MovementController : MonoBehaviour
     // }
     
     
-    private float runSpeed = 10f;
-    private float walkSpeed = 5;
+    private float runSpeed = 5;
+    private float walkSpeed = 2;
     public Animator _animator;
     private Vector3 movement;
     private bool isRunning;

@@ -3,6 +3,7 @@ using Features.Journey.Bootstrap;
 using Features.MainMenu.Bootstrap;
 using Features.Persistence.Bootstrap;
 using Features.SceneTransitions.Bootstrap;
+using Features.StoryNodes.Bootstrap;
 using Features.Win;
 using FSM.Bootstrap;
 using Utilities;
@@ -14,6 +15,7 @@ namespace Bootstrap
    {
       public override void InstallBindings()
       { 
+         Container.Install<NodeInstaller>();
          Container.Install<CanvasInstaller>();
          Container.Install<JourneyInstaller>();
          Container.Install<CurtainInstaller>();
