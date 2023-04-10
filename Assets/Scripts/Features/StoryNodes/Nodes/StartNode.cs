@@ -13,16 +13,7 @@ namespace Features.StoryNodes.Nodes
 
         protected override void Definition()
         {
-            Start = ControlInput("Start", flow =>
-            {
-                var script = flow.GetValue<string>(ScriptName);
-
-                Debug.Log(script);
-
-                return Complete;
-            });
-            
-            // Start = ControlInputCoroutine("Start", RunCoroutine);
+            Start = ControlInputCoroutine("Start", RunCoroutine);
             Complete = ControlOutput("Complete");
 
             ScriptName = ValueInput("Script Name", "");
@@ -32,7 +23,7 @@ namespace Features.StoryNodes.Nodes
         {
             var script = flow.GetValue<string>(ScriptName);
 
-            Debug.Log(script);
+            Debug.Log("WORKED");
             // _signalBus.Fire(new CutsceneSignals.StartScript(script));
             yield return Complete;
         }

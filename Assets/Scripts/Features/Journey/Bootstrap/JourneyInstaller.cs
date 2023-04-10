@@ -1,6 +1,5 @@
-﻿using Features.Journey.Controllers;
-using Features.Journey.Factories;
-using Features.Roadmap.Data;
+﻿using Features.Journey.Factories;
+using Utilities;
 using Zenject;
 
 namespace Features.Journey.Bootstrap
@@ -9,9 +8,7 @@ namespace Features.Journey.Bootstrap
     {
         public override void InstallBindings()
         {
-            Container
-                .BindFactory<Stage, JourneyController, JourneyControllerFactory>()
-                .AsSingle();
+            Container.InstallFactory<JourneyControllerFactory>();
         }
     }
 }

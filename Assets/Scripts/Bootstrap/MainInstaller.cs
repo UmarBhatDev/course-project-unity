@@ -1,4 +1,5 @@
 using Bootstrap.CanvasBootstrap.Bootstrap;
+using Features.EndPoint.Installers;
 using Features.Journey.Bootstrap;
 using Features.MainMenu.Bootstrap;
 using Features.Persistence.Bootstrap;
@@ -22,6 +23,8 @@ namespace Bootstrap
          Container.Install<MainMenuInstaller>();
          Container.Install<PersistenceInstaller>();
          Container.Install<StateMachineInstaller>();
+         
+         Container.Install<EndPointInstaller>();
 
          Container.InstallService<WinViewFactory>();
       }

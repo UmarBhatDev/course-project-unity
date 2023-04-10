@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: NodeTemplateRegistry
   m_EditorClassIdentifier: 
   RegistryItems:
-  - Name: Level2
+  - Name: Level_2
     Presenter: {fileID: 1039716025724446526, guid: b8136a869fc0b174c83757ef093d3122, type: 3}
