@@ -8,7 +8,7 @@ using FSM.States;
 
 namespace Features.MainMenu.Controllers
 {
-    public class MainMenuController: IDisposable
+    public class MainMenuController : IDisposable
     {
         private MainMenuView _mainMenuView;
         private readonly IStateMachine _stateMachine;

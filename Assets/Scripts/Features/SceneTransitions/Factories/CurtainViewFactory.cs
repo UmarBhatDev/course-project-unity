@@ -21,7 +21,7 @@ namespace Features.SceneTransitions.Factories
 
         public CurtainViewBase Create(CurtainType curtainType)     
         {
-            return _container.InstantiatePrefabForComponent<CurtainViewBase>(_curtainRegistry.GetCurtainByType(curtainType), _canvasData.Canvas.transform);
+            return _container.InstantiatePrefabForComponent<CurtainViewBase>(_curtainRegistry.GetCurtainByType(curtainType));
         }
     }
 }

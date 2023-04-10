@@ -1,25 +1,26 @@
-﻿using System;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using Features.MainMenu.Factories;
-using Features.SceneTransitions.Factories;
 using FSM.Data;
 using FSM.Interfaces;
+using UniRx;
 
 namespace FSM.States
 {
     public class MainMenuState : IGameState<MainMenuState.PayLoad>
     {
-        private readonly CurtainViewFactory _curtainViewFactory;
+        private CompositeDisposable _compositeDisposable;
         private readonly MainMenuControllerFactory _mainMenuControllerFactory;
 
-        public MainMenuState(MainMenuControllerFactory mainMenuControllerFactory, CurtainViewFactory curtainViewFactory)
+        public MainMenuState(MainMenuControllerFactory mainMenuControllerFactory)
         {
-            _curtainViewFactory = curtainViewFactory;
+            _compositeDisposable = new CompositeDisposable();
             _mainMenuControllerFactory = mainMenuControllerFactory;
         }
 
         public async UniTaskVoid Enter(PayLoad payload)
         {
+            _compositeDisposable = new CompositeDisposable();
+
             var mainMenuController = _mainMenuControllerFactory.Create();
             
             mainMenuController.Initialize();

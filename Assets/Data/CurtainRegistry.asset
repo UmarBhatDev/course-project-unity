@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: CurtainRegistry
   m_EditorClassIdentifier: 
   _curtainViews:
-  - {fileID: 2123234772644098047, guid: 94336b446ebf2d04c9a8bb1e5d5e5fcf, type: 3}
+  - {fileID: 5504886550627769565, guid: c4a0f2b2b4eca454f87dd922235ab65d, type: 3}

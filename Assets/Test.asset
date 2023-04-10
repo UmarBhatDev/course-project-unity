@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95e66c6366d904e98bc83428217d4fd7, type: 3}
+  m_Name: Test
+  m_EditorClassIdentifier: 
+  _data:
+    _json: '{"graph":{"variables":{"Kind":"Flow","collection":{"$content":[],"$version":"A"},"$version":"A"},"controlInputDefinitions":[],"controlOutputDefinitions":[],"valueInputDefinitions":[],"valueOutputDefinitions":[],"title":"Level0TutorialNode","summary":"Level0TutorialNode","pan":{"x":110.3138,"y":-26.98484},"zoom":1.0,"elements":[{"coroutine":false,"defaultValues":{},"position":{"x":-274.0,"y":-115.0},"guid":"7975ee0d-a663-476a-a396-0d1f7537f506","$version":"A","$type":"Unity.VisualScripting.Start","$id":"9"},{"defaultValues":{"Script
+      Name":{"$content":"WORKED!!!!","$type":"System.String"}},"position":{"x":-29.0,"y":-93.0},"guid":"200549d4-5474-4d9f-b47d-ebd13e02ab75","$version":"A","$type":"Features.StoryNodes.Nodes.StartNode","$id":"11"},{"sourceUnit":{"$ref":"9"},"sourceKey":"trigger","destinationUnit":{"$ref":"11"},"destinationKey":"Start","guid":"14d269b3-17b8-436e-b674-9b8ee0f19d8b","$type":"Unity.VisualScripting.ControlConnection"}],"$version":"A"}}'
+    _objectReferences: []
