@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: RegistryInstaller
   m_EditorClassIdentifier: 
   _nodeTemplateRegistry: {fileID: 11400000, guid: add8878146d168b499366955ebee6b6b, type: 2}
+  _interactableConfig: {fileID: 11400000, guid: ccd2b087773df6d43829afa6aa2d50fa, type: 2}
   _curtainRegistry: {fileID: 11400000, guid: 593ff0a3d7338a947a26ce935b51d406, type: 2}
   _roadmapRegistry: {fileID: 11400000, guid: 0c267852a8cae9b4284cec37acd224cb, type: 2}
   _viewData: {fileID: 11400000, guid: 6fed42a5c0aa85c40a6b50b6ab921fdf, type: 2}
