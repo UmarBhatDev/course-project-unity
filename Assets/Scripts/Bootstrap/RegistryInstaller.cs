@@ -1,4 +1,5 @@
 ﻿using Bootstrap.CanvasBootstrap.Data;
+using Features.Interactables.Data;
 using Features.Roadmap.Data;
 using Features.SceneTransitions.Data;
 using Features.StoryNodes.Data;
@@ -13,6 +14,7 @@ namespace Bootstrap
     {
         [Header("Game")]
         [SerializeField] private NodeTemplateRegistry _nodeTemplateRegistry;
+        [SerializeField] private InteractableConfig _interactableConfig;
         [SerializeField] private CurtainRegistry _curtainRegistry;
         [SerializeField] private RoadmapRegistry _roadmapRegistry;
         [SerializeField] private ViewRegistry _viewData;
@@ -20,6 +22,7 @@ namespace Bootstrap
         public override void InstallBindings()
         {
             Container.InstallRegistry(_nodeTemplateRegistry);
+            Container.InstallRegistry(_interactableConfig);
             Container.InstallRegistry(_curtainRegistry);
             Container.InstallRegistry(_roadmapRegistry);
             Container.InstallRegistry(_viewData);

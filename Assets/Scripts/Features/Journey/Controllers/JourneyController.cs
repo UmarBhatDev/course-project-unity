@@ -2,6 +2,7 @@
 using System.Threading;
 using Bootstrap.CanvasBootstrap.Data;
 using Cysharp.Threading.Tasks;
+using Features.Actor.Rules;
 using Features.Roadmap.Data;
 using Features.StoryNodes.Services;
 using Features.Win;
@@ -15,10 +16,13 @@ namespace Features.Journey.Controllers
         private readonly NodeService _nodeService;
         private readonly WinViewFactory _winViewFactory;
 
+        private ActorRule _actorRule;
+
         private readonly CompositeDisposable _compositeDisposable;
-        public JourneyController(Stage stage, NodeService nodeService, WinViewFactory winViewFactory)
+        public JourneyController(Stage stage, NodeService nodeService, WinViewFactory winViewFactory, ActorRule actorRule)
         {
             _stage = stage;
+            _actorRule = actorRule;
             _nodeService = nodeService;
             _winViewFactory = winViewFactory;
             _compositeDisposable = new CompositeDisposable();
@@ -56,6 +60,7 @@ namespace Features.Journey.Controllers
 
         public void Dispose()
         {
+            _actorRule.DisposeActor();
             _compositeDisposable.Dispose();
         }
     }
