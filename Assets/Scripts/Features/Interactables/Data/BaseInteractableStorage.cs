@@ -17,6 +17,9 @@ namespace Features.Interactables.Data
         
         public void AddItem(T item)
         {
+            if (Items.Contains(item))
+                return;
+            
             Items.Add(item);
             ItemAddedSubject.OnNext(item);
         }

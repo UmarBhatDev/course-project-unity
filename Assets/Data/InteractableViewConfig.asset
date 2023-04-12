@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58d4d479d39f46bcb58c450982f1d699, type: 3}
   m_Name: InteractableViewConfig
   m_EditorClassIdentifier: 
-  _interactDistance: 0.4
+  _interactDistance: 2

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -18,17 +17,20 @@ namespace Features.Interactables.Services
         private ActorModel _actorModel;
 
         private readonly ActorRule _actorRule;
+        private readonly InteractableConfig _interactableConfig;
         private readonly InteractableStorage _interactableStorage;
 
+        private IInteractable _currentInteractable;
+        private IDisposable _statusCheckDisposable;
         private CompositeDisposable _compositeDisposable;
-        private CancellationTokenSource _cancellationTokenSource;
 
-        public InteractableRule(InteractableStorage interactableStorage, ActorRule actorRule)
+        public InteractableRule(InteractableStorage interactableStorage, InteractableConfig interactableConfig, ActorRule actorRule)
         {
             _actorRule = actorRule;
+            _interactableConfig = interactableConfig;
             _interactableStorage = interactableStorage;
             _compositeDisposable = new CompositeDisposable();
-            _cancellationTokenSource = new CancellationTokenSource();
+            Initialize();
         }
         
         public void Initialize()
@@ -38,10 +40,7 @@ namespace Features.Interactables.Services
                 _actorModel = model;
                 
                 _compositeDisposable?.Dispose();
-                _cancellationTokenSource?.Cancel();
-
                 _compositeDisposable = new CompositeDisposable();
-                _cancellationTokenSource = new CancellationTokenSource();
                 
                 _actorModel
                     .GetPositionAsObservable()
@@ -52,35 +51,49 @@ namespace Features.Interactables.Services
 
         private async UniTask HandleInteractions(Vector3 playerPosition)
         {
-            var interactablesInRange = new Dictionary<IInteractable, float>();
+            var interactableTuples = _interactableStorage
+                .Select(interactable =>
+                {
+                    var canInteract = interactable.CanInteract(playerPosition, out var distance);
+                    return (interactable, canInteract, distance);
+                });
+                
+            var interactableTuple = interactableTuples
+                .Where(interactable => interactable.distance < _interactableConfig.InteractDistance)
+                .OrderBy(interactable => interactable.distance)
+                .FirstOrDefault();
 
-            foreach (var interactable in _interactableStorage)
-            {
-                var canInteract = interactable.CanInteract(playerPosition, out var interactDistance);
+            if (interactableTuple == default) return;
+            if (!interactableTuple.canInteract) return;
 
-                if (canInteract)
-                    interactablesInRange.Add(interactable, interactDistance);
-            }
-
-            var closestInteractable = interactablesInRange
-                .OrderBy(x => x.Value)
-                .First()
-                .Key;
-
-            _cancellationTokenSource.Cancel();
-            _cancellationTokenSource = new CancellationTokenSource();
+            StopCurrentInteractable();
             
-            await closestInteractable.Interact(_cancellationTokenSource.Token);
-            closestInteractable.StopInteract();
+            _currentInteractable = interactableTuple.interactable;
+            _statusCheckDisposable = Observable
+                .EveryUpdate()
+                .Subscribe(_ =>
+                {
+                    _currentInteractable.CanInteract(_actorModel.GetPosition(), out var interactDistance);
+                    var isActorReady = interactDistance <= _interactableConfig.InteractDistance;
+
+                    if (isActorReady) return;
+
+                    StopCurrentInteractable();
+                });
+
+            await _currentInteractable.Interact(CancellationToken.None);
+        }
+
+        private void StopCurrentInteractable()
+        {
+            _currentInteractable?.StopInteraction();
+            _statusCheckDisposable?.Dispose();
         }
 
         public void Dispose()
         {
             _compositeDisposable?.Dispose();
-            _cancellationTokenSource?.Dispose();
-
             _compositeDisposable = new CompositeDisposable();
-            _cancellationTokenSource = new CancellationTokenSource();
         }
     }
 }

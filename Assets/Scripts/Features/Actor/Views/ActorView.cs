@@ -47,10 +47,7 @@ namespace Features.Actor.Views
 
             _actorModel
                 .GetMovementStateAsObservable()
-                .Subscribe(movementState =>
-                {
-                    _animator.SetInteger(_movementStateAnimatorHash, (int)movementState);
-                })
+                .Subscribe(movementState => _animator.SetInteger(_movementStateAnimatorHash, (int)movementState))
                 .AddTo(_compositeDisposable);
         }
         
