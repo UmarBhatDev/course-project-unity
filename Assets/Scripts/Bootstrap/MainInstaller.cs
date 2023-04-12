@@ -14,23 +14,23 @@ using Zenject;
 
 namespace Bootstrap
 {
-   public class MainInstaller : MonoInstaller
-   {
-      public override void InstallBindings()
-      { 
-         Container.Install<NodeInstaller>();
-         Container.Install<ActorInstaller>();
-         Container.Install<CanvasInstaller>();
-         Container.Install<JourneyInstaller>();
-         Container.Install<CurtainInstaller>();
-         Container.Install<MainMenuInstaller>();
-         Container.Install<PersistenceInstaller>();
-         Container.Install<InteractableInstaller>();
-         Container.Install<StateMachineInstaller>();
-         
-         Container.Install<EndPointInstaller>();
+    public class MainInstaller : MonoInstaller
+    {
+        public override void InstallBindings()
+        {
+            Container.Install<NodeInstaller>();
+            Container.Install<ActorInstaller>();
+            Container.Install<CanvasInstaller>();
+            Container.Install<JourneyInstaller>();
+            Container.Install<CurtainInstaller>();
+            Container.Install<MainMenuInstaller>();
+            Container.Install<PersistenceInstaller>();
+            Container.Install<InteractableInstaller>();
+            Container.Install<StateMachineInstaller>();
 
-         Container.InstallService<WinViewFactory>();
-      }
-   }
+            Container.Install<EndPointInstaller>();
+
+            Container.InstallService<WinViewFactory>();
+        }
+    }
 }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcbf3d870e1e4ca4bb83cca0206f00ee, type: 3}
   m_Name: ViewRegistry
   m_EditorClassIdentifier: 
+  _carLootboxView: {fileID: 789389714224725241, guid: 442d7e43cda074e4f8f6fd8c614f9ac7, type: 3}
   _mainMenuPanel: {fileID: 5035008041001557487, guid: d6cc2842c92a2f14fb1ab3a18bce294d, type: 3}
   _endPointView: {fileID: 3584583850223886412, guid: 103bd1f6e2a8cf54ca895d7fbf56178c, type: 3}
   _gamePlayCanvas: {fileID: 7529875063150994278, guid: daa87f8e93e00e74593ea59353c7429e, type: 3}
