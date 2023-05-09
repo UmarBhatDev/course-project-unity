@@ -9,6 +9,6 @@ namespace Features.Interactables.Base
     {
         public bool CanInteract(Vector3 interactPosition, out float interactDistance);
         public UniTask Interact(CancellationToken externalToken);
-        public void StopInteraction();
+        public UniTask StopInteraction();
     }
 }

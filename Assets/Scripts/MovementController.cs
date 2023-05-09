@@ -4,50 +4,49 @@ using UnityEngine;
 
 public class MovementController : MonoBehaviour
 {
-    private float speedRotation = 5f;
     private float _currentSpeedRotation;
+    private float SpeedRotation { get; set; } = 5f;
 
-    public float SpeedRotation { get => speedRotation; set => speedRotation = value; }
-
-    private float runSpeed = 5;
-    private float walkSpeed = 2;
-    private bool isRunning;
+    private const float RunSpeed = 5;
+    private const float WalkSpeed = 2;
+    private bool _isRunning;
     
-    public Animator _animator;
-    private Vector3 movement;
+    private Animator _animator;
+    private Vector3 _movement;
     private Rigidbody _rigidbody;
+    
+    private static readonly int MovementStateHash = Animator.StringToHash("MovementState");
 
 
-
-    void Start()
+    private void Start()
     {
         _animator = GetComponent<Animator>();
 
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    void Update()
+    private void Update()
     {
-        movement.z = Input.GetAxisRaw("Horizontal");
-        movement.x = -Input.GetAxisRaw("Vertical");
+        _movement.z = Input.GetAxisRaw("Horizontal");
+        _movement.x = -Input.GetAxisRaw("Vertical");
 
-        isRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        _isRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 
-        if (movement == Vector3.zero)
+        if (_movement == Vector3.zero)
         {
-            _animator.SetInteger("MovementState", (int)MovementState.Idle);
+            _animator.SetInteger(MovementStateHash, (int)MovementState.Idle);
             return;
         }
-        _animator.SetInteger("MovementState", (int) (isRunning ? MovementState.Run : MovementState.Walk));
+        _animator.SetInteger(MovementStateHash, (int) (_isRunning ? MovementState.Run : MovementState.Walk));
     }
 
     private void FixedUpdate()
     {
-        if (movement == Vector3.zero) 
+        if (_movement == Vector3.zero) 
             return;
         
-        var speed = isRunning ? runSpeed : walkSpeed;
-        var moveDirection = movement.normalized;
+        var speed = _isRunning ? RunSpeed : WalkSpeed;
+        var moveDirection = _movement.normalized;
             
         _rigidbody.MovePosition(_rigidbody.position + moveDirection * speed * Time.deltaTime);
             

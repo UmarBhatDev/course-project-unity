@@ -1,20 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcbf3d870e1e4ca4bb83cca0206f00ee, type: 3}
-  m_Name: ViewRegistry
-  m_EditorClassIdentifier: 
-  _carLootboxView: {fileID: 789389714224725241, guid: 442d7e43cda074e4f8f6fd8c614f9ac7, type: 3}
-  _mainMenuPanel: {fileID: 5035008041001557487, guid: d6cc2842c92a2f14fb1ab3a18bce294d, type: 3}
-  _endPointView: {fileID: 3584583850223886412, guid: 103bd1f6e2a8cf54ca895d7fbf56178c, type: 3}
-  _gamePlayCanvas: {fileID: 7529875063150994278, guid: daa87f8e93e00e74593ea59353c7429e, type: 3}
-  _actorView: {fileID: 3426379013858113321, guid: d3275c5d61250424e99e7b2fed8539ff, type: 3}
-  _winView: {fileID: 7066534819907756974, guid: c8bdd73f063770644a448b2768990259, type: 3}
+version https://git-lfs.github.com/spec/v1
+oid sha256:fb6ef0f328ae43fcf857ec55fdc48f83f20926f16dcad3afa0d1559ab2dd7ffc
+size 895
