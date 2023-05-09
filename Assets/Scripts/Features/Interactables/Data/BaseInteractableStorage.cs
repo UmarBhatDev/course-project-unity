@@ -15,7 +15,7 @@ namespace Features.Interactables.Data
         public IObservable<T> OnItemAdded => ItemAddedSubject;
         public IObservable<T> OnItemRemoved => ItemRemovedSubject;
         
-        public void AddItem(T item)
+        public virtual void AddItem(T item)
         {
             if (Items.Contains(item))
                 return;
@@ -24,7 +24,7 @@ namespace Features.Interactables.Data
             ItemAddedSubject.OnNext(item);
         }
         
-        public void RemoveItem(T item)
+        public virtual void RemoveItem(T item)
         {
             var succeed = Items.Remove(item);
             if (succeed)

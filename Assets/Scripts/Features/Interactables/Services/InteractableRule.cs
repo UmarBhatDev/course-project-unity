@@ -66,7 +66,7 @@ namespace Features.Interactables.Services
             if (interactableTuple == default) return;
             if (!interactableTuple.canInteract) return;
 
-            StopCurrentInteractable();
+            await StopCurrentInteractable();
             
             _currentInteractable = interactableTuple.interactable;
             _statusCheckDisposable = Observable
@@ -78,15 +78,16 @@ namespace Features.Interactables.Services
 
                     if (isActorReady) return;
 
-                    StopCurrentInteractable();
+                    StopCurrentInteractable().Forget();
                 });
 
             await _currentInteractable.Interact(CancellationToken.None);
         }
 
-        private void StopCurrentInteractable()
+        private async UniTask StopCurrentInteractable()
         {
-            _currentInteractable?.StopInteraction();
+            if (_currentInteractable != null) 
+                await _currentInteractable.StopInteraction();
             _statusCheckDisposable?.Dispose();
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 
@@ -6,18 +7,23 @@ namespace Features.Actor.Models
 {
     public class ActorModel : IDisposable
     {
+        private Rigidbody _rigidBody;
+        private readonly ReactiveCommand _disposed;
         private readonly ReactiveProperty<Vector3> _position;
         private readonly ReactiveProperty<Quaternion> _rotation;
         private readonly ReactiveProperty<MovementState> _movementState;
 
-
         public ActorModel(Vector3 position, Quaternion rotation)
         {
+            _disposed = new ReactiveCommand();
             _position = new ReactiveProperty<Vector3>(position);
             _rotation = new ReactiveProperty<Quaternion>(rotation);
             _movementState = new ReactiveProperty<MovementState>(MovementState.Idle);
         }
 
+        public void SetRigidbody(Rigidbody rigidbody)
+            => _rigidBody = rigidbody;
+        
         public void SetPosition(Vector3 position)
             => _position.Value = position;
 
@@ -27,6 +33,9 @@ namespace Features.Actor.Models
         public void SetMovementState(MovementState movementState)
             => _movementState.Value = movementState;
 
+        public Rigidbody GetRigidbody()
+            => _rigidBody;
+        
         public Vector3 GetPosition()
             => _position.Value;
 
@@ -44,6 +53,9 @@ namespace Features.Actor.Models
         
         public IObservable<MovementState> GetMovementStateAsObservable()
             => _movementState.AsObservable();
+
+        public IObservable<Unit> GetIsDisposedAsObservable()
+            => _disposed.AsUnitObservable();
 
         public void Dispose()
         {
