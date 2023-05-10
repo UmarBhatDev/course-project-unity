@@ -43,6 +43,12 @@ namespace FSM.States
             
             var stage = _journeyProgress.GetActiveStage();
             
+            if (stage == null)
+            {
+                _stateMachine.GoMainMenu(CurtainType.BlackFade); 
+                return;
+            }
+            
             await Transition.ToScene(stage.SceneName, _curtainViewFactory, curtainType, payload.AdditionalAction);
 
             try
@@ -52,6 +58,14 @@ namespace FSM.States
 
                 if (!_stateCancellationTokenSource.Token.IsCancellationRequested)
                 {
+                    stage = _journeyProgress.GetActiveStage();
+
+                    if (stage == null)
+                    {
+                        _stateMachine.GoMainMenu(CurtainType.BlackFade); 
+                        return;
+                    }
+                    
                     _stateMachine.GoJourney();
                 }
             }
@@ -71,6 +85,7 @@ namespace FSM.States
         private async UniTask Play(Stage stage)
         {
             var journeyController = _journeyControllerFactory.Create(stage);
+            _globalCompositeDisposable.AddDisposable(journeyController);
             
             using (var playCancellation = 
                    CancellationTokenSource.CreateLinkedTokenSource(_stateCancellationTokenSource.Token))
@@ -82,7 +97,7 @@ namespace FSM.States
                 playCancellation.Cancel();
             }
             
-            journeyController.Dispose();
+            journeyController?.Dispose();
         }
         
         public struct PayLoad
@@ -100,6 +115,7 @@ namespace FSM.States
         public void Exit()
         {
             _stateCancellationTokenSource.Dispose();
+            _globalCompositeDisposable.Dispose();
         }
     }
     

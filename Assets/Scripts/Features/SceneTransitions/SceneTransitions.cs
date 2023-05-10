@@ -1,12 +1,10 @@
-﻿using System;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using Features.SceneTransitions.Controllers;
 using Features.SceneTransitions.Factories;
 using FSM.Data;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
-using UnityEngine.SceneManagement;
 
 namespace Features.SceneTransitions
 {
@@ -15,7 +13,7 @@ namespace Features.SceneTransitions
     {
         public static UniTask ToScene(string sceneName, CurtainViewFactory curtainViewFactory, CurtainType curtain = CurtainType.BlackFade, AdditionalTask additionalTask = default)
             => ToScene(
-                handle: Addressables.LoadSceneAsync(sceneName, LoadSceneMode.Single, false),
+                handle: Addressables.LoadSceneAsync(sceneName),
                 curtainViewFactory,
                 curtain,
                 additionalTask);

@@ -19,13 +19,15 @@ namespace Features.Persistence.Services
         {
             var roadmap = _roadmapRegistry.Roadmap;
 
-            var activeStage = roadmap.Stages.FirstOrDefault(
-                stage => GetStageStatus(stage.Id) == StageStatus.Active);
-            
+            var activeStage = 
+                roadmap.Stages.FirstOrDefault(
+                stage => GetStageStatus(stage.Id) == StageStatus.Active) ??
+                roadmap.Stages.FirstOrDefault(
+                stage => GetStageStatus(stage.Id) == StageStatus.Unvisited);
+
             if (activeStage == null)
             {
-                activeStage = roadmap.Stages.First();
-                Debug.LogWarning($"[JourneyProgress] Saved activeStage is null. Applying default value: {activeStage.Id}");
+                Debug.LogWarning($"[JourneyProgress] Saved activeStage is null. Applying default value:");
             }
             else
             {

@@ -16,6 +16,7 @@ namespace Features.Lootboxes.Views
             if (IsOneTime && TryGetComponent<CompassProPOI>(out var poi))
                 poi.enabled = false;
             
+            Interacted?.Execute();
             CancellationTokenSource?.Cancel();
             InteractableStorage.RemoveItem(this);
         }

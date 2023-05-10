@@ -1531,6 +1531,8 @@ GameObject:
   - component: {fileID: 3836029924297692537}
   - component: {fileID: 3836029924297692540}
   - component: {fileID: 3836029924297692543}
+  - component: {fileID: 1453427657527587673}
+  - component: {fileID: 4962528955720045289}
   - component: {fileID: 45223802302891877}
   m_Layer: 8
   m_Name: Actor
@@ -1762,7 +1764,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2db8d34ed836104da5fc4956d3702e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Side: 0
+  Side: 1
   IsAggressive: 1
 --- !u!114 &3836029924297692537
 MonoBehaviour:
@@ -1850,6 +1852,57 @@ MonoBehaviour:
     PreventClimbing: 0
     PreventArmLowering: 0
     Aiming: 0
+--- !u!114 &1453427657527587673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3777177029700506126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cbb12125ce5e1e4a95e1fb5d1c00b06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Footstep:
+  - {fileID: 8300000, guid: dc777f306336768499c2e118fbe30c66, type: 3}
+  Death: []
+  Jump: []
+  Land: []
+  Block:
+  - {fileID: 8300000, guid: ab82285c89bd389499805e9fedfdb55d, type: 3}
+  Hurt: []
+  Hit:
+  - {fileID: 8300000, guid: abff0e0bf9ca227478663309e992af6f, type: 3}
+  - {fileID: 8300000, guid: e25da7e8443c9c64a975ff0ca9dd45cc, type: 3}
+  - {fileID: 8300000, guid: d5f15d1bdbd0dc34695e52428772e377, type: 3}
+  BigHit:
+  - {fileID: 8300000, guid: 4a956ac5982935444a74102dffeface5, type: 3}
+  - {fileID: 8300000, guid: fded1ef7980386242b385a35c8616971, type: 3}
+  - {fileID: 8300000, guid: 49b7af924458b834994c43ff9ba5f65d, type: 3}
+  BigDamageThreshold: 50
+--- !u!114 &4962528955720045289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3777177029700506126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6f61bc5677094b40855ef2a33d1b1ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Step: {fileID: 1083284618116306, guid: 6b3933c2c56ed8049aa32165c1fbbd4a, type: 3}
+  Land: {fileID: 1625306006137464, guid: a6f5a08aa2d3e884d8db53afdd7840fe, type: 3}
+  Death: {fileID: 1089779840387952, guid: 3c30ae926cf645543bb909fbb1fd2e61, type: 3}
+  Resurrection: {fileID: 0}
+  Jump: {fileID: 1075378003986696, guid: 54d9c475864942a4db67fb2420db315a, type: 3}
+  Hurt: {fileID: 1475366652680470, guid: c2e6a03945531b449ba1a5ee4115753f, type: 3}
+  Block: {fileID: 1083284618116306, guid: 6b3933c2c56ed8049aa32165c1fbbd4a, type: 3}
+  Hit: {fileID: 1609724841452804, guid: 29ef05aa5a977ce4ea1d10408047bedf, type: 3}
+  BigHit: {fileID: 0}
+  BigDamageThreshold: 50
 --- !u!114 &45223802302891877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3551,6 +3604,21 @@ MonoBehaviour:
     Adaptation: 2
     ShakeMultiplier: 2
     RecoilMultiplier: 1
+--- !u!114 &3264569758278310471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180424810006351529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdcd06815c47d30489f70df42db56a48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frustumSettings:
+    baseSettings: {fileID: 0}
+    qualitySettings: {fileID: 0}
 --- !u!4 &1185761739633532389 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4709199153285568, guid: d55a1f2ddd2af1748aa4e485af8b2264, type: 3}
