@@ -16,8 +16,8 @@ namespace Bootstrap.CanvasBootstrap.Bootstrap
 
         public override void InstallBindings()
         {
-            var canvas = Container.InstantiatePrefabForComponent<Canvas>(_viewRegistry.GamePlayCanvas);
-            var canvasData = new CanvasData(canvas);
+            var canvas = Container.InstantiatePrefab(_viewRegistry.GamePlayCanvas);
+            var canvasData = new CanvasData(canvas.GetComponent<Canvas>());
             
             Container.Bind<CanvasData>().FromInstance(canvasData).AsSingle();
         }

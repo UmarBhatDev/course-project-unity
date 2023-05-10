@@ -1,4 +1,5 @@
 using Bootstrap.CanvasBootstrap.Bootstrap;
+using Bootstrap.GlobalDisposable.Installers;
 using Features.Actor.Installers;
 using Features.EndPoint.Installers;
 using Features.Hints.Installers;
@@ -9,6 +10,7 @@ using Features.MainMenu.Bootstrap;
 using Features.Persistence.Bootstrap;
 using Features.SceneTransitions.Bootstrap;
 using Features.StoryNodes.Bootstrap;
+using Features.StoryNodes.Tutorials.Installers;
 using Features.Win;
 using FSM.Bootstrap;
 using Utilities;
@@ -28,9 +30,11 @@ namespace Bootstrap
             Container.Install<CurtainInstaller>();
             Container.Install<LootboxInstaller>();
             Container.Install<MainMenuInstaller>();
+            Container.Install<TutorialInstaller>();
             Container.Install<PersistenceInstaller>();
             Container.Install<InteractableInstaller>();
             Container.Install<StateMachineInstaller>();
+            Container.Install<GlobalDisposableInstaller>();
 
             Container.Install<EndPointInstaller>();
 

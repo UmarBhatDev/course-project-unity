@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using CompassNavigatorPro;
+using UnityEngine;
 
 namespace Features.Lootboxes.Views
 {
@@ -11,6 +12,9 @@ namespace Features.Lootboxes.Views
         {
             _closedLootbox.SetActive(false);
             _openedLootbox.SetActive(true);
+            
+            if (IsOneTime && TryGetComponent<CompassProPOI>(out var poi))
+                poi.enabled = false;
             
             CancellationTokenSource?.Cancel();
             InteractableStorage.RemoveItem(this);

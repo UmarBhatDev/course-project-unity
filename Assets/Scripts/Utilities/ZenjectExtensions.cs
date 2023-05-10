@@ -8,8 +8,7 @@ namespace Utilities
         {
             container
                 .BindInterfacesAndSelfTo<TService>()
-                .AsSingle()
-                .NonLazy();
+                .AsSingle();
         }
         
         public static void InstallFactory<TService>(this DiContainer container)

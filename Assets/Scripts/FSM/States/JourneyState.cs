@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading;
+using Bootstrap;
+using Bootstrap.GlobalDisposable.Services;
 using Cysharp.Threading.Tasks;
 using Features.Journey.Factories;
 using Features.Persistence.Services;
@@ -17,16 +19,18 @@ namespace FSM.States
         private readonly JourneyProgress _journeyProgress;
         private readonly CurtainViewFactory _curtainViewFactory;
         private readonly JourneyControllerFactory _journeyControllerFactory;
+        private readonly GlobalCompositeDisposable _globalCompositeDisposable;
 
         private CancellationTokenSource _stateCancellationTokenSource;
 
         public JourneyState(CurtainViewFactory curtainViewFactory, IStateMachine stateMachine,
-            JourneyProgress journeyProgress, JourneyControllerFactory journeyControllerFactory)
+            JourneyProgress journeyProgress, JourneyControllerFactory journeyControllerFactory, GlobalCompositeDisposable globalCompositeDisposable)
         {
             _stateMachine = stateMachine;
             _journeyProgress = journeyProgress;
             _curtainViewFactory = curtainViewFactory;
             _journeyControllerFactory = journeyControllerFactory;
+            _globalCompositeDisposable = globalCompositeDisposable;
 
             _stateCancellationTokenSource = new CancellationTokenSource();
         }
@@ -61,6 +65,7 @@ namespace FSM.States
         private void FinishStage(Stage stage)
         {
             _journeyProgress.MarkStageVisited(stage.Id);
+            _globalCompositeDisposable.Dispose();
         }
 
         private async UniTask Play(Stage stage)

@@ -7,11 +7,11 @@ using Zenject;
 
 namespace Features.StoryNodes.Factories
 {
-    public class NodeScriptPlaceholderFactory : PlaceholderFactory<string, NodeScript>
+    public class NodeScriptPlaceholderFactory : PlaceholderFactory<string, NodeScriptPresenter, NodeScript>
     {
     }
 
-    public class NodeScriptFactory : IFactory<string, NodeScript>
+    public class NodeScriptFactory : IFactory<string, NodeScriptPresenter, NodeScript>
     {
         private readonly DiContainer _diContainer;
         private readonly NodeTemplateRegistry _cutsceneTemplateRegistry;
@@ -22,14 +22,12 @@ namespace Features.StoryNodes.Factories
             _diContainer = diContainer;
         }
 
-        public NodeScript Create(string techName)
+        public NodeScript Create(string techName, NodeScriptPresenter nodeScriptPresenter)
         {
-            var template = _cutsceneTemplateRegistry.FindByTechName(techName);
-            
-            if (template == null)
+            if (nodeScriptPresenter == null)
                 return null;
             
-            var go = Object.Instantiate(template.Presenter.gameObject);
+            var go = Object.Instantiate(nodeScriptPresenter.gameObject);
             
             var view = go.GetComponent<NodeScriptPresenter>();
             

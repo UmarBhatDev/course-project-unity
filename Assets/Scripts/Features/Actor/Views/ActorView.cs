@@ -34,16 +34,6 @@ namespace Features.Actor.Views
             transform.rotation = _actorModel.GetRotation();
             _animator.SetInteger(_movementStateAnimatorHash, (int) MovementState.Idle);
             
-            // _actorModel
-            //     .GetPositionAsObservable()
-            //     .Subscribe(position => transform.position = position)
-            //     .AddTo(_compositeDisposable);
-
-            // _actorModel
-            //     .GetRotationAsObservable()
-            //     .Subscribe(rotation => transform.rotation = rotation)
-            //     .AddTo(_compositeDisposable);
-
             _actorModel
                 .GetMovementStateAsObservable()
                 .Subscribe(movementState => _animator.SetInteger(_movementStateAnimatorHash, (int)movementState))

@@ -12,11 +12,11 @@ namespace Bootstrap.CanvasBootstrap.Data
         [SerializeField] private MainMenuView _mainMenuPanel;
         [SerializeField] private EndPointView _endPointView;
         [SerializeField] private Canvas _gamePlayCanvas;
-        [SerializeField] private ActorView _actorView;
+        [SerializeField] private PlayerView _playerView;
         [SerializeField] private WinView _winView;
 
         public WinView WinView => _winView;
-        public ActorView ActorView => _actorView;
+        public PlayerView PlayerView => _playerView;
         public Canvas GamePlayCanvas => _gamePlayCanvas;
         public EndPointView EndPointView => _endPointView;
         public MainMenuView MainMenuPanel => _mainMenuPanel;

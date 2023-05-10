@@ -1,4 +1,5 @@
 ﻿using System;
+using Features.StoryNodes.Presenters;
 
 namespace Features.Roadmap.Data
 {
@@ -7,5 +8,6 @@ namespace Features.Roadmap.Data
     {
         public string Id;
         public string SceneName;
+        public NodeScriptPresenter Script;
     }
 }

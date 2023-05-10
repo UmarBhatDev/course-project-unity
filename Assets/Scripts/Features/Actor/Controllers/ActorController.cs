@@ -12,7 +12,7 @@ namespace Features.Actor.Controllers
         private readonly ActorModel _actorModel;
         private readonly CompositeDisposable _compositeDisposable;
 
-        private const float RotationSpeed = 15f;
+        private const float YOffset = 1.2f;
         private const float RunSpeed = 5;
         private const float WalkSpeed = 2;
         
@@ -50,10 +50,12 @@ namespace Features.Actor.Controllers
             var transform = rigidBody.transform;
 
             var moveDirection = _direction.normalized.x * _actorView.Orientation.forward + _direction.normalized.z * _actorView.Orientation.right;
-            
-            _actorModel.GetRigidbody().MovePosition(transform.position + moveDirection * _localSpeed * Time.deltaTime);
 
-            var newPosition = transform.position;
+            var position = transform.position;
+            
+            _actorModel.GetRigidbody().MovePosition(position + moveDirection * _localSpeed * Time.deltaTime);
+
+            var newPosition = new Vector3(position.x, position.y + YOffset, position.z);
             
             var newRotation = Quaternion.LookRotation(moveDirection);
 

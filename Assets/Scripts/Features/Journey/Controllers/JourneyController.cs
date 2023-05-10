@@ -30,7 +30,7 @@ namespace Features.Journey.Controllers
 
         public async UniTask Play(CancellationToken cancellationToken)
         {
-            var script = _nodeService.CreateScript(_stage.Id);
+            var script = _nodeService.CreateScript(_stage.Id, _stage.Script);
             script?.Play();
             
             //find BOLT component and run

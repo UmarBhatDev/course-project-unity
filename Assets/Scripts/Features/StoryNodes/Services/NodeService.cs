@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Features.StoryNodes.Data;
 using Features.StoryNodes.Factories;
+using Features.StoryNodes.Presenters;
 
 namespace Features.StoryNodes.Services
 {
@@ -15,9 +16,9 @@ namespace Features.StoryNodes.Services
             _scripts = new List<NodeScript>();
         }
 
-        public NodeScript CreateScript(string techName)
+        public NodeScript CreateScript(string techName, NodeScriptPresenter prefab)
         {
-            var script = _nodeTemplateRegistry.Create(techName);
+            var script = _nodeTemplateRegistry.Create(techName, prefab);
             _scripts.Add(script);
 
             return script;
