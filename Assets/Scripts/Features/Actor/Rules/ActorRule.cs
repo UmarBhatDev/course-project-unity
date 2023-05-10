@@ -2,19 +2,21 @@
 using Features.Actor.Controllers;
 using Features.Actor.Factories;
 using Features.Actor.Models;
+using Features.Actor.Views;
 using UnityEngine;
 
 namespace Features.Actor.Rules
 {
     public class ActorRule : IGameRule
     {
-        public event Action<ActorModel> ActorCreated;
+        public event Action<ActorModel, PlayerView> ActorCreated;
 
         private readonly ActorViewFactory _actorViewFactory;
         private readonly ActorModelFactory _actorModelFactory;
         private readonly ActorControllerFactory _actorControllerFactory;
 
         private ActorModel _actorModel;
+        private PlayerView _actorView;
         private ActorController _actorController;
 
         public ActorRule(ActorViewFactory actorViewFactory, ActorModelFactory actorModelFactory,
@@ -29,17 +31,21 @@ namespace Features.Actor.Rules
         {
             var actorModel = _actorModelFactory.Create(position, rotation);
             var actorView = _actorViewFactory.Create(actorModel, position);
-            actorModel.SetRigidbody(actorView.GetComponent<Rigidbody>());
-            var actorController = _actorControllerFactory.Create(actorModel, actorView);
+            // actorModel.SetRigidbody(actorView.GetComponent<Rigidbody>());
+            // var actorController = _actorControllerFactory.Create(actorModel, actorView);
 
             _actorModel = actorModel;
-            _actorController = actorController;
+            _actorView = actorView;
+            // _actorController = actorController;
 
-            ActorCreated?.Invoke(actorModel);
+            ActorCreated?.Invoke(actorModel, actorView);
         }
 
         public ActorModel GetActorModel()
             => _actorModel;
+        
+        public PlayerView GetActorView()
+            => _actorView;
         
         public void DisposeActor()
         {

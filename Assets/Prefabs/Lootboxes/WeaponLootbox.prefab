@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5162664012638439700}
   - component: {fileID: 5162664012638439701}
+  - component: {fileID: 57747959}
   m_Layer: 0
   m_Name: WeaponLootbox
   m_TagString: Untagged
@@ -47,6 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fbb14147afa47ecaeb5644dbb93624e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsOneTime: 1
   _lootType: 1
   _timeToTrigger: 3
   _outline: {fileID: 5162664013308295889}
@@ -55,6 +57,77 @@ MonoBehaviour:
   _lootboxRarenessType: 4
   _openedLootbox: {fileID: 5161466722789365674}
   _closedLootbox: {fileID: 5161972632322939852}
+--- !u!114 &57747959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5162664012638439698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78ba861a214074aa4bdac708dcacc9fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: -1146644273
+  priority: 0
+  visibility: 1
+  visibleDistanceOverride: 0
+  visibleMinDistanceOverride: 0
+  minDistanceText: 10
+  title: Complete Level
+  titleVisibility: 0
+  canBeVisited: 1
+  visitedDistanceOverride: 0
+  hideWhenVisited: 0
+  isVisited: 1
+  visitedText: 
+  visitedAudioClip: {fileID: 0}
+  radius: 0
+  iconScale: 1.91
+  iconNonVisited: {fileID: 0}
+  iconVisited: {fileID: 21300000, guid: abaf904b6f998264c8033f31bbd463cb, type: 3}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  showPlayModeGizmo: 0
+  clampPosition: 0
+  beaconAudioClip: {fileID: 0}
+  dontDestroyOnLoad: 0
+  heartbeatEnabled: 0
+  heartbeatAudioClip: {fileID: 0}
+  heartbeatDistance: 20
+  heartbeatInterval:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.25
+      inSlope: 0
+      outSlope: 2.75
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 3
+      inSlope: 2.75
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  miniMapVisibility: 1
+  miniMapClampPosition: 0
+  miniMapShowRotation: 0
+  miniMapRotationAngleOffset: 0
+  miniMapIconScale: 1
+  distanceToCameraSQR: 151.71707
+  computedIconScale: {x: 2.1630247, y: 2.1630247, z: 1}
+  iconAlpha: 0
+  miniMapCurrentIconScale: {x: 0.5, y: 0.5, z: 0.5}
 --- !u!1001 &5162664013089665144
 PrefabInstance:
   m_ObjectHideFlags: 0

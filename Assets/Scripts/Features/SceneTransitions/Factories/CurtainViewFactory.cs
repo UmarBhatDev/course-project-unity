@@ -1,4 +1,5 @@
 ﻿using Bootstrap.CanvasBootstrap;
+using Bootstrap.CanvasBootstrap.Data;
 using Features.SceneTransitions.Data;
 using Features.SceneTransitions.Views;
 using FSM.Data;

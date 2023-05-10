@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Bootstrap.CanvasBootstrap
+namespace Bootstrap.CanvasBootstrap.Data
 {
     public struct CanvasData
     {

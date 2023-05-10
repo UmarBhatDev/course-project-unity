@@ -21,10 +21,7 @@ namespace Features.StoryNodes.Nodes
 
         private IEnumerator RunCoroutine(Flow flow)
         {
-            var script = flow.GetValue<string>(ScriptName);
-
-            Debug.Log("WORKED");
-            // _signalBus.Fire(new CutsceneSignals.StartScript(script));
+            flow.GetValue<string>(ScriptName);
             yield return Complete;
         }
     }

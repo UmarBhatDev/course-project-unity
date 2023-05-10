@@ -9,6 +9,8 @@ using Features.Interactables.Data;
 using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using Unit = UniRx.Unit;
 
 namespace Features.Interactables.Services
 {
@@ -20,6 +22,7 @@ namespace Features.Interactables.Services
         private readonly InteractableConfig _interactableConfig;
         private readonly InteractableStorage _interactableStorage;
 
+        private ReactiveCommand _interacted;
         private IInteractable _currentInteractable;
         private IDisposable _statusCheckDisposable;
         private CompositeDisposable _compositeDisposable;
@@ -29,13 +32,16 @@ namespace Features.Interactables.Services
             _actorRule = actorRule;
             _interactableConfig = interactableConfig;
             _interactableStorage = interactableStorage;
+            
+            _interacted = new ReactiveCommand();
             _compositeDisposable = new CompositeDisposable();
+            
             Initialize();
         }
         
         public void Initialize()
         {
-            _actorRule.ActorCreated += model =>
+            _actorRule.ActorCreated += (model, _) =>
             {
                 _actorModel = model;
                 
@@ -48,6 +54,9 @@ namespace Features.Interactables.Services
                     .AddTo(_compositeDisposable);
             };
         }
+
+        public IObservable<Unit> GetInteractedAsObservable()
+            => _interacted.AsUnitObservable();
 
         private async UniTask HandleInteractions(Vector3 playerPosition)
         {
@@ -82,12 +91,23 @@ namespace Features.Interactables.Services
                 });
 
             await _currentInteractable.Interact(CancellationToken.None);
+
+            _interacted?.Execute();
         }
 
         private async UniTask StopCurrentInteractable()
         {
-            if (_currentInteractable != null) 
-                await _currentInteractable.StopInteraction();
+            try
+            {
+                if (_currentInteractable != null) 
+                    await _currentInteractable.StopInteraction();
+            }
+            catch (Exception)
+            {
+                // ignored
+                //because MonoBehaviour never gets null
+            }
+
             _statusCheckDisposable?.Dispose();
         }
 

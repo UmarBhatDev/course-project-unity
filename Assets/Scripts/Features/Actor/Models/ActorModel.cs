@@ -59,6 +59,7 @@ namespace Features.Actor.Models
 
         public void Dispose()
         {
+            _disposed?.Execute();
             _position?.Dispose();
             _rotation?.Dispose();
             _movementState?.Dispose();

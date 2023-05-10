@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Features.Actor.Factories
 {
-    public class ActorViewFactory : IFactory<ActorModel, Vector3, ActorView>
+    public class ActorViewFactory : IFactory<ActorModel, Vector3, PlayerView>
     {
         private readonly DiContainer _diContainer;
         private readonly ViewRegistry _viewRegistry;
@@ -17,9 +17,9 @@ namespace Features.Actor.Factories
             _viewRegistry = viewRegistry;
         }
 
-        public ActorView Create(ActorModel actorModel, Vector3 position)
+        public PlayerView Create(ActorModel actorModel, Vector3 position)
         {
-            return _diContainer.InstantiatePrefabForComponent<ActorView>(_viewRegistry.ActorView, position, Quaternion.identity, null,
+            return _diContainer.InstantiatePrefabForComponent<PlayerView>(_viewRegistry.PlayerView, position, Quaternion.identity, null,
                 new object[] { actorModel });
         }
     }

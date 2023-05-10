@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using CompassNavigatorPro;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Features.Hints.Data;
@@ -22,6 +23,7 @@ namespace Features.Lootboxes.Views
         protected InteractableStorage InteractableStorage;
         protected CancellationTokenSource CancellationTokenSource;
 
+        [SerializeField] protected bool IsOneTime;
         [SerializeField] private LootType _lootType;
         [SerializeField] private float _timeToTrigger;
         [SerializeField] private Outline _outline;
@@ -53,11 +55,17 @@ namespace Features.Lootboxes.Views
             InteractableStorage.AddItem(this);
         }
 
+        private Vector3 closestPoint;
         public bool CanInteract(Vector3 interactPosition, out float interactDistance)
         {
-            var closestPoint = _lootboxCollider.ClosestPointOnBounds(interactPosition);
+            closestPoint = _lootboxCollider.ClosestPointOnBounds(interactPosition);
             interactDistance = Vector3.Distance(interactPosition, closestPoint);
             return _canInteract;
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawSphere(closestPoint, 0.05f);
         }
 
         public async UniTask Interact(CancellationToken externalToken)
@@ -77,8 +85,6 @@ namespace Features.Lootboxes.Views
             
             _keyHintCanvas.SetHintImage(keyUntappedGraphics);
             _keyHintCanvas.SetHintImageActive(true);
-
-            
 
             while (!linkedCts.Token.IsCancellationRequested)
             {
@@ -143,6 +149,10 @@ namespace Features.Lootboxes.Views
         protected virtual void OnTaskCompleted()
         {
             gameObject.SetActive(false);
+            
+            if (IsOneTime && TryGetComponent<CompassProPOI>(out var poi))
+                poi.enabled = false;
+
             CancellationTokenSource?.Cancel();
         }
 
