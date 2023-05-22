@@ -2,6 +2,7 @@
 using CoverShooter;
 using Features.Actor.Rules;
 using FSM;
+using FSM.Data;
 using FSM.States;
 using UniRx;
 using Unity.VisualScripting;
@@ -36,7 +37,7 @@ namespace Features.Actor.Services
             {
                 _characterMotor = view.GetComponent<CharacterMotor>();
 
-                _characterMotor.Died += () => _stateMachine.GoJourney();
+                _characterMotor.Died += () => _stateMachine.GoGameOver(CurtainType.NoFadeOut);
             };
         }
 

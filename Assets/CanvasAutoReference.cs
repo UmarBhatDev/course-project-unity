@@ -13,10 +13,12 @@ public class CanvasAutoReference : MonoBehaviour
     [SerializeField] private GunAmmo _gunAmmo;
     [SerializeField] private GameObject _compass;
     [SerializeField] private GameObject _miniMap;
+    [SerializeField] private HealthBar _playerHealth;
 
     public GunAmmo GunAmmo => _gunAmmo;
     public GameObject Compass => _compass;
     public GameObject MiniMap => _miniMap;
+    public HealthBar PlayerHealth => _playerHealth;
     public CompassPro CompassNavigatorPro => _compassNavigatorPro ? _compassNavigatorPro : GetComponent<CompassPro>();
 
     private void Awake()
@@ -32,8 +34,10 @@ public class CanvasAutoReference : MonoBehaviour
 
         if (_actorRule.GetActorView() != null)
         {
-            _compassNavigatorPro.miniMapFollow = _actorRule.GetActorView().transform;
-            _gunAmmo.Motor = _actorRule.GetActorView().GetComponent<CharacterMotor>();
+            var actorView = _actorRule.GetActorView();
+            _compassNavigatorPro.miniMapFollow = actorView.transform;
+            _gunAmmo.Motor = actorView.GetComponent<CharacterMotor>();
+            _playerHealth.Target = actorView.gameObject;
         }
         else
         {
@@ -41,6 +45,7 @@ public class CanvasAutoReference : MonoBehaviour
             {
                 _compassNavigatorPro.miniMapFollow = view.transform;
                 _gunAmmo.Motor = view.GetComponent<CharacterMotor>();
+                _playerHealth.Target = view.gameObject;
             };
         }
     }

@@ -49,7 +49,7 @@ namespace FSM.States
                 return;
             }
             
-            await Transition.ToScene(stage.SceneName, _curtainViewFactory, curtainType, payload.AdditionalAction);
+            await Transition.ToScene(stage.SceneName, _curtainViewFactory, _globalCompositeDisposable, curtainType, payload.AdditionalAction);
 
             try
             {
@@ -62,7 +62,7 @@ namespace FSM.States
 
                     if (stage == null)
                     {
-                        _stateMachine.GoMainMenu(CurtainType.BlackFade); 
+                        _stateMachine.GoMainMenu(CurtainType.NoFadeOut); 
                         return;
                     }
                     
@@ -79,7 +79,6 @@ namespace FSM.States
         private void FinishStage(Stage stage)
         {
             _journeyProgress.MarkStageVisited(stage.Id);
-            _globalCompositeDisposable.Dispose();
         }
 
         private async UniTask Play(Stage stage)
@@ -102,7 +101,7 @@ namespace FSM.States
         
         public struct PayLoad
         {
-            public readonly AdditionalTask AdditionalAction;
+            public AdditionalTask AdditionalAction;
             public CurtainType? CurtainOverride { get; set; }
 
             public PayLoad(CurtainType curtainOverride, AdditionalTask additionalAction)
@@ -115,16 +114,16 @@ namespace FSM.States
         public void Exit()
         {
             _stateCancellationTokenSource.Dispose();
-            _globalCompositeDisposable.Dispose();
         }
     }
     
     public static partial class StateMachineExtensions
     {
-        public static void GoJourney(this IStateMachine stateMachine, CurtainType? curtainType = null)
+        public static void GoJourney(this IStateMachine stateMachine, CurtainType? curtainType = null, AdditionalTask task = null)
             => stateMachine.EnterState<JourneyState, JourneyState.PayLoad>(new JourneyState.PayLoad
             {
-                CurtainOverride = curtainType
+                CurtainOverride = curtainType,
+                AdditionalAction = task
             });
     }
 }
