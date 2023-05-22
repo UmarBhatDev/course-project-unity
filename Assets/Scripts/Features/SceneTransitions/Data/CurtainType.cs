@@ -4,5 +4,7 @@
     { 
         None,
         BlackFade,
+        NoFadeIn,
+        NoFadeOut,
     }
 }

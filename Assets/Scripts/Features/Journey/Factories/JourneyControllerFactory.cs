@@ -1,4 +1,5 @@
-﻿using Features.Actor.Rules;
+﻿using Bootstrap.CanvasBootstrap.Data;
+using Features.Actor.Rules;
 using Features.Journey.Controllers;
 using Features.Roadmap.Data;
 using Features.StoryNodes.Services;
@@ -10,15 +11,16 @@ namespace Features.Journey.Factories
     public class JourneyControllerFactory : IFactory<Stage, JourneyController>
     {
         private readonly ActorRule _actorRule;
+        private readonly CanvasData _canvasData;
         private readonly NodeService _nodeService;
-        private readonly WinViewFactory _winViewFactory;
         
         private JourneyController _instance;
-        public JourneyControllerFactory(ActorRule actorRule, NodeService nodeService, WinViewFactory winViewFactory)
+        
+        public JourneyControllerFactory(ActorRule actorRule, CanvasData canvasData, NodeService nodeService)
         {
             _actorRule = actorRule;
+            _canvasData = canvasData;
             _nodeService = nodeService;
-            _winViewFactory = winViewFactory;
         }
 
         public JourneyController GetInstance()
@@ -28,7 +30,7 @@ namespace Features.Journey.Factories
 
         public JourneyController Create(Stage stage)
         {
-            _instance = new JourneyController(stage, _nodeService, _winViewFactory, _actorRule);
+            _instance = new JourneyController(stage, _nodeService, _actorRule, _canvasData);
             return _instance;
         }
     }

@@ -5,53 +5,53 @@ using Cysharp.Threading.Tasks;
 using Features.Actor.Rules;
 using Features.Roadmap.Data;
 using Features.StoryNodes.Services;
-using Features.Win;
-using UniRx;
+using UnityEngine;
 
 namespace Features.Journey.Controllers
 {
     public class JourneyController : IDisposable
     {
         private readonly Stage _stage;
+        private readonly ActorRule _actorRule;
+        private readonly CanvasData _canvasData;
         private readonly NodeService _nodeService;
-        private readonly WinViewFactory _winViewFactory;
 
-        private ActorRule _actorRule;
+        private bool _levelCompletionRequested;
+        private CanvasAutoReference _autoReference;
+        
+        private const string KillsKey = "Kills";
 
-        private readonly CompositeDisposable _compositeDisposable;
-        public JourneyController(Stage stage, NodeService nodeService, WinViewFactory winViewFactory, ActorRule actorRule)
+        public JourneyController(Stage stage, NodeService nodeService, ActorRule actorRule, CanvasData canvasData)
         {
             _stage = stage;
             _actorRule = actorRule;
+            _canvasData = canvasData;
             _nodeService = nodeService;
-            _winViewFactory = winViewFactory;
-            _compositeDisposable = new CompositeDisposable();
         }
 
         public async UniTask Play(CancellationToken cancellationToken)
         {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            PlayerPrefs.SetInt(KillsKey, 0);
+            
             var script = _nodeService.CreateScript(_stage.Id, _stage.Script);
             script?.Play();
-            
-            //find BOLT component and run
+
+            _autoReference = _canvasData.Canvas.GetComponent<CanvasAutoReference>();
+            _autoReference.GunAmmo.gameObject.SetActive(true);
+            _autoReference.MiniMap.gameObject.SetActive(true);
+            _autoReference.Compass.SetActive(true);
+            _autoReference.CompassNavigatorPro.enabled = true;
 
             await UniTask.WaitUntil(ShouldExit, cancellationToken: cancellationToken);
         }
 
-        private WinView _view;
-        
         private bool ShouldExit()
         {
-            if (_view != null) 
-                return _view.ButtonTapped || _levelCompletionRequested;
-            
-            _view = _winViewFactory.Create();
-            _view.AddTo(_compositeDisposable);
-
-            return _view.ButtonTapped || _levelCompletionRequested;
+            return _levelCompletionRequested;
         }
-
-        private bool _levelCompletionRequested = false;
 
         public void RequestLevelCompletion()
         {
@@ -60,8 +60,13 @@ namespace Features.Journey.Controllers
 
         public void Dispose()
         {
+            _autoReference ??= _canvasData.Canvas.GetComponent<CanvasAutoReference>();
+            _autoReference.GunAmmo.gameObject.SetActive(false);
+            _autoReference.MiniMap.gameObject.SetActive(false);
+            _autoReference.Compass.SetActive(false);
+            _autoReference.CompassNavigatorPro.enabled = false;
+
             _actorRule.DisposeActor();
-            _compositeDisposable.Dispose();
         }
     }
 }

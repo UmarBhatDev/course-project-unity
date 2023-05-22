@@ -32,24 +32,27 @@ public class KeyHintCanvas : MonoBehaviour
         _progressImage.gameObject.SetActive(isActive);
     }
 
-    public void SetHintImageActive(bool isActive)
+    public void SetHintImageActive(bool isActive, bool followCamera = true)
     {
         //todo: animations
         _compositeDisposable?.Dispose();
-        
+
         _compositeDisposable = new CompositeDisposable();
-  
-        Observable
-            .EveryUpdate()
-            .Subscribe(_ =>
-            {
-                if (Camera.current == null) 
-                    return;
-                
-                var cameraPosition = Camera.current.transform.position;
-                _canvas.transform.LookAt(new Vector3(cameraPosition.x, cameraPosition.y, cameraPosition.z));
-            })
-            .AddTo(_compositeDisposable);
+
+        if (followCamera)
+        {
+            Observable
+                .EveryUpdate()
+                .Subscribe(_ =>
+                {
+                    if (Camera.current == null)
+                        return;
+
+                    var cameraPosition = Camera.current.transform.position;
+                    _canvas.transform.LookAt(new Vector3(cameraPosition.x, cameraPosition.y, cameraPosition.z));
+                })
+                .AddTo(_compositeDisposable);
+        }
 
         _hintImage.gameObject.SetActive(isActive);
     }

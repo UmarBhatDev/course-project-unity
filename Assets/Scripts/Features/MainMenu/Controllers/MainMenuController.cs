@@ -5,6 +5,7 @@ using Features.MainMenu.Views;
 using FSM;
 using FSM.Data;
 using FSM.States;
+using UnityEngine.Device;
 
 namespace Features.MainMenu.Controllers
 {
@@ -26,13 +27,10 @@ namespace Features.MainMenu.Controllers
 
             _mainMenuView.PlayButtonPressed += () =>
             {
-                _stateMachine.EnterState<JourneyState, JourneyState.PayLoad>(new JourneyState.PayLoad(CurtainType.BlackFade, Close));
-                
+                _stateMachine.GoJourney(CurtainType.BlackFade, Close);
             };
             
-            _mainMenuView.ExitButtonPressed += () =>
-            {
-            };
+            _mainMenuView.ExitButtonPressed += Application.Quit;
 
             UniTask Close()
             {

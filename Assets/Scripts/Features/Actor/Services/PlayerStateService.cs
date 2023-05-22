@@ -1,24 +1,31 @@
 ﻿using System;
 using CoverShooter;
 using Features.Actor.Rules;
+using FSM;
+using FSM.Data;
+using FSM.States;
+using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Features.Actor.Services
 {
-    public class PlayerStateService : IInitializable
+    public class PlayerStateService : IInitializable, IDisposable
     {
         private readonly ActorRule _actorRule;
-
+        private readonly IStateMachine _stateMachine;
+        
         private CharacterMotor _characterMotor;
 
-        public PlayerStateService(ActorRule actorRule)
+        public PlayerStateService(ActorRule actorRule,
+            IStateMachine stateMachine)
         {
             _actorRule = actorRule;
+            _stateMachine = stateMachine;
             _characterMotor = null;
+
             Initialize();
         }
-
         public void Initialize()
         {
             if (_actorRule.GetActorView() != null)
@@ -26,7 +33,12 @@ namespace Features.Actor.Services
                 _characterMotor = _actorRule.GetActorView().GetComponent<CharacterMotor>();
             }
 
-            _actorRule.ActorCreated += (_, view) => { _characterMotor = view.GetComponent<CharacterMotor>(); };
+            _actorRule.ActorCreated += (_, view) =>
+            {
+                _characterMotor = view.GetComponent<CharacterMotor>();
+
+                _characterMotor.Died += () => _stateMachine.GoGameOver(CurtainType.NoFadeOut);
+            };
         }
 
         public bool IsCrouching()

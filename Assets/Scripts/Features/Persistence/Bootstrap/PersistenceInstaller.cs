@@ -9,6 +9,7 @@ namespace Features.Persistence.Bootstrap
         public override void InstallBindings()
         {
             Container.InstallService<JourneyProgress>();
+            Container.InstallService<InventoryProgress>();
         }
     }
 }

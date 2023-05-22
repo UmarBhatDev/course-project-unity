@@ -1,9 +1,11 @@
 ﻿using Features.Lootboxes.Data;
 using Features.Lootboxes.Views;
+#if UNITY_EDITOR
 using UnityEditor;
-
+#endif
 namespace Features.Lootboxes
 {
+#if UNITY_EDITOR
     [CustomEditor(typeof(BaseLootboxView))]
     public class TextLootboxCustomDrawer : Editor
     {
@@ -46,4 +48,6 @@ namespace Features.Lootboxes
             _serializedObject.ApplyModifiedProperties();
         }
     }
+#endif
+    
 }

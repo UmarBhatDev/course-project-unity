@@ -17,6 +17,8 @@ namespace Features.Lootboxes.Views
 {
     public class BaseLootboxView : MonoBehaviour, IInteractable
     {
+        public ReactiveCommand Interacted;
+        
         protected KeyCodeService KeyCodeService;
         protected LootboxService LootboxService;
         protected KeyGraphicsStorage KeyGraphicsStorage;
@@ -42,10 +44,8 @@ namespace Features.Lootboxes.Views
             LootboxService = lootboxService;
             KeyGraphicsStorage = keyGraphicsStorage;
             InteractableStorage = interactableStorage;
-        }
-
-        private void Start()
-        {
+            
+            Interacted = new ReactiveCommand();
             _compositeDisposable = new CompositeDisposable();
             CancellationTokenSource = new CancellationTokenSource();
         }
@@ -149,9 +149,13 @@ namespace Features.Lootboxes.Views
         protected virtual void OnTaskCompleted()
         {
             gameObject.SetActive(false);
+            Interacted?.Execute();
             
             if (IsOneTime && TryGetComponent<CompassProPOI>(out var poi))
                 poi.enabled = false;
+
+            if (IsOneTime)
+                InteractableStorage.RemoveItem(this);
 
             CancellationTokenSource?.Cancel();
         }
