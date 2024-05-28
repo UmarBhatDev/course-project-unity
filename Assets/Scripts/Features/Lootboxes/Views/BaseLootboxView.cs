@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using CompassNavigatorPro;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using Features.Hints.Data;
 using Features.Hints.Services;
 using Features.Interactables.Base;
@@ -11,6 +9,7 @@ using Features.Lootboxes.Data;
 using Features.Lootboxes.Services;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Features.Lootboxes.Views
@@ -26,11 +25,11 @@ namespace Features.Lootboxes.Views
         protected CancellationTokenSource CancellationTokenSource;
 
         [SerializeField] protected bool IsOneTime;
+        [FormerlySerializedAs("_keyHintCanvas")][SerializeField] protected KeyHintCanvas KeyHintCanvas;
         [SerializeField] private LootType _lootType;
         [SerializeField] private float _timeToTrigger;
         [SerializeField] private Outline _outline;
         [SerializeField] private Collider _lootboxCollider;
-        [SerializeField] private KeyHintCanvas _keyHintCanvas;
         [SerializeField] private LootboxRarenessType _lootboxRarenessType;
 
         private bool _canInteract = true;
@@ -83,8 +82,8 @@ namespace Features.Lootboxes.Views
             var keyUntappedGraphics = KeyGraphicsStorage.GetUntappedKeySprite(actionKey);
             var keyTappedGraphics = KeyGraphicsStorage.GetTappedKeySprite(actionKey);
             
-            _keyHintCanvas.SetHintImage(keyUntappedGraphics);
-            _keyHintCanvas.SetHintImageActive(true);
+            KeyHintCanvas.SetHintImage(keyUntappedGraphics);
+            KeyHintCanvas.SetHintImageActive(true);
 
             while (!linkedCts.Token.IsCancellationRequested)
             {
@@ -106,23 +105,23 @@ namespace Features.Lootboxes.Views
                             if (_lootType == LootType.Instant)
                                 actionKeyPressedCompletionSource.TrySetResult();
 
-                            _keyHintCanvas.SetHintImage(keyTappedGraphics);
-                            _keyHintCanvas.SetProgressActive(true);
+                            KeyHintCanvas.SetHintImage(keyTappedGraphics);
+                            KeyHintCanvas.SetProgressActive(true);
                         }
                         else if (Input.GetKey(actionKey))
                         {
                             elapsedTime += Time.deltaTime;
                             completionPercent = elapsedTime / _timeToTrigger;
                         
-                            _keyHintCanvas.SetProgress(completionPercent);
+                            KeyHintCanvas.SetProgress(completionPercent);
                         
                             if (elapsedTime > _timeToTrigger) 
                                 actionKeyPressedCompletionSource.TrySetResult();
                         }
                         else
                         {
-                            _keyHintCanvas.SetHintImage(keyUntappedGraphics);
-                            _keyHintCanvas.SetProgressActive(false);
+                            KeyHintCanvas.SetHintImage(keyUntappedGraphics);
+                            KeyHintCanvas.SetProgressActive(false);
                             elapsedTime = 0;
                         }
                     })
@@ -139,8 +138,8 @@ namespace Features.Lootboxes.Views
         {
             _canInteract = true;
             _outline.enabled = false;
-            _keyHintCanvas.SetHintImageActive(false);
-            _keyHintCanvas.SetProgressActive(false);
+            KeyHintCanvas.SetHintImageActive(false);
+            KeyHintCanvas.SetProgressActive(false);
 
             _compositeDisposable?.Dispose();
             CancellationTokenSource?.Cancel();
@@ -151,12 +150,14 @@ namespace Features.Lootboxes.Views
             gameObject.SetActive(false);
             Interacted?.Execute();
             
-            if (IsOneTime && TryGetComponent<CompassProPOI>(out var poi))
-                poi.enabled = false;
-
             if (IsOneTime)
+            {
                 InteractableStorage.RemoveItem(this);
+                KeyHintCanvas.gameObject.SetActive(false);
 
+                if (TryGetComponent<CompassProPOI>(out var poi)) poi.enabled = false;
+            }
+            
             CancellationTokenSource?.Cancel();
         }
 

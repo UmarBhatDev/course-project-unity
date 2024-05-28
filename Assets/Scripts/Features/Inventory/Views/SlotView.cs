@@ -16,6 +16,7 @@ namespace Features.Inventory.Views
         [NonSerialized] public InventoryItemType InventoryItemType;
         [NonSerialized] public bool IsBusy;
         
+        [SerializeField] private bool _isInteractable = true;
         [SerializeField] private Image _itemImage;
         [SerializeField] private Image _innerOutlineImage;
         [SerializeField] private TMP_Text _countText;
@@ -30,16 +31,20 @@ namespace Features.Inventory.Views
         {
             _compositeDisposable = new CompositeDisposable();
 
-            _slotButton
-                .OnClickAsObservable()
-                .Subscribe(_ =>
-                {
-                    _outLineImage.gameObject.SetActive(true);
-                    _slotButton.interactable = false;
+            if (_isInteractable)
+            {
+                _slotButton
+                    .OnClickAsObservable()
+                    .Subscribe(_ =>
+                    {
+                    
+                        _outLineImage.gameObject.SetActive(true);
+                        _slotButton.interactable = false;
 
-                    SlotSelected?.Invoke(this);
-                })
-                .AddTo(_compositeDisposable);
+                        SlotSelected?.Invoke(this);
+                    })
+                    .AddTo(_compositeDisposable);  
+            }
         }
 
         public void SetItem(InventoryItemData itemData, int count, bool isBusy = true)

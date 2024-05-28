@@ -16,14 +16,14 @@ namespace Features.Inventory.Services
         private readonly KeyCodeService _keyCodeService;
         private readonly InventoryControllerFactory _inventoryControllerFactory;
 
+        private IDisposable _exitDisposable;
+        
         public InventoryService(KeyCodeService keyCodeService, InventoryControllerFactory inventoryControllerFactory)
         {
             _keyCodeService = keyCodeService;
             _inventoryControllerFactory = inventoryControllerFactory;
         }
-
-        private IDisposable _exitDisposable;
-
+        
         public void Initialize()
         {
             var inventoryKey = _keyCodeService.GetKeyBind(KeyType.InventoryKey);

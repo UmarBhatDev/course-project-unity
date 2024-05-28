@@ -496,6 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c113a653bb454dd7bfecf7581bd6228c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isInteractable: 1
   _itemImage: {fileID: 8793688056109846125}
   _innerOutlineImage: {fileID: 7156054140444233140}
   _countText: {fileID: 1312240580010823577}

@@ -1,5 +1,6 @@
 ﻿using Features.Hints.Data;
 using ModestTree;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Features.Hints.Services
@@ -15,17 +16,17 @@ namespace Features.Hints.Services
 
         public void SaveKeyBind(KeyType keyType, KeyCode keyCode)
         {
-            PlayerPrefs.SetString(keyType.ToString(), JsonUtility.ToJson(keyCode));
+            PlayerPrefs.SetString(keyType.ToString(), JsonConvert.SerializeObject(keyCode));
         }
 
         public KeyCode GetKeyBind(KeyType keyType)
         {
             var defaultKeyCode = _defaultKeyBindsRegistry.GetKeyCodeForAction(keyType);
-            var defaultKeySerialized = JsonUtility.ToJson(defaultKeyCode);
+            var defaultKeySerialized = JsonConvert.SerializeObject(defaultKeyCode);
             var keySerialized = PlayerPrefs.GetString(keyType.ToString(), defaultKeySerialized);
             var keyDeserialized = keySerialized.IsEmpty()
-                ? JsonUtility.FromJson<KeyCode>(defaultKeySerialized)
-                : JsonUtility.FromJson<KeyCode>(keySerialized);
+                ? JsonConvert.DeserializeObject<KeyCode>(defaultKeySerialized)
+                : JsonConvert.DeserializeObject<KeyCode>(keySerialized);
 
             return keyDeserialized;
         }

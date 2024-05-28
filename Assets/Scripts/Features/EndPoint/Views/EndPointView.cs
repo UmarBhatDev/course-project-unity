@@ -7,10 +7,17 @@ namespace Features.EndPoint.Views
 {
     public class EndPointView : MonoBehaviour, IDisposable
     {
+        [SerializeField] private GameObject _bonfire;
+        
         public readonly ReactiveCommand EndPointReached = new();
 
         private BaseLootboxView _lootbox;
         private CompositeDisposable _compositeDisposable = new();
+
+        private void Awake()
+        {
+            _bonfire.SetActive(false);
+        }
 
         private void Start()
         {
@@ -20,6 +27,7 @@ namespace Features.EndPoint.Views
                 .Interacted
                 .Subscribe(_ =>
                 {
+                    _bonfire.SetActive(true);
                     EndPointReached.Execute();
                 })
                 .AddTo(_compositeDisposable);
