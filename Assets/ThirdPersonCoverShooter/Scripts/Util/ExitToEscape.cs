@@ -9,8 +9,7 @@ namespace CoverShooter
     {
         private void LateUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-                Application.Quit();
+            if (Input.GetKeyDown(KeyCode.Escape)) return;
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Features.GameOverMenu.Controllers
 
             _gameOverView.TryAgainPressed += () =>
             {
-                _stateMachine.GoJourney(CurtainType.BlackFade, Close);
+                _stateMachine.GoJourney(curtainType: CurtainType.BlackFade, task: Close);
             };
             
             _gameOverView.ReturnToMainMenuPressed += () =>

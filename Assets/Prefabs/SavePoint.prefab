@@ -11,13 +11,16 @@ GameObject:
   - component: {fileID: 1890220664471803415}
   - component: {fileID: 7280961537131523033}
   - component: {fileID: 2416888056517314208}
+  - component: {fileID: 79552493513176269}
+  - component: {fileID: 1878301391}
+  - component: {fileID: 1878301392}
   m_Layer: 0
   m_Name: SavePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1890220664471803415
 Transform:
   m_ObjectHideFlags: 0
@@ -62,12 +65,168 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsOneTime: 1
+  KeyHintCanvas: {fileID: 3523951763655728221}
   _lootType: 1
   _timeToTrigger: 2
   _outline: {fileID: 7670099800678701781}
   _lootboxCollider: {fileID: 1069467305352063461}
-  _keyHintCanvas: {fileID: 3523951763655728221}
   _lootboxRarenessType: 0
+--- !u!114 &79552493513176269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1890220664471803416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78ba861a214074aa4bdac708dcacc9fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: -1146644273
+  priority: 0
+  visibility: 1
+  visibleDistanceOverride: 0
+  visibleMinDistanceOverride: 0
+  minDistanceText: 10
+  title: Fire
+  titleVisibility: 1
+  canBeVisited: 0
+  visitedDistanceOverride: 0
+  hideWhenVisited: 0
+  isVisited: 0
+  visitedText: 
+  visitedAudioClip: {fileID: 0}
+  radius: 0
+  iconScale: 2.24
+  iconNonVisited: {fileID: 0}
+  iconVisited: {fileID: 21300000, guid: 9adb7458a86acf146817cfca16161e25, type: 3}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  showPlayModeGizmo: 0
+  clampPosition: 0
+  beaconAudioClip: {fileID: 0}
+  dontDestroyOnLoad: 0
+  heartbeatEnabled: 0
+  heartbeatAudioClip: {fileID: 0}
+  heartbeatDistance: 20
+  heartbeatInterval:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.25
+      inSlope: 0
+      outSlope: 2.75
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 3
+      inSlope: 2.75
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  miniMapVisibility: 1
+  miniMapClampPosition: 0
+  miniMapShowRotation: 0
+  miniMapRotationAngleOffset: 0
+  miniMapIconScale: 2
+  distanceToCameraSQR: 151.71707
+  computedIconScale: {x: 2.1630247, y: 2.1630247, z: 1}
+  iconAlpha: 0
+  miniMapCurrentIconScale: {x: 0.5, y: 0.5, z: 0.5}
+--- !u!64 &1878301391
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1890220664471803416}
+  m_Material: {fileID: 13400000, guid: 7333adb339ba9144e880fc16aa3d699a, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
+--- !u!114 &1878301392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1890220664471803416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78ba861a214074aa4bdac708dcacc9fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 21160565
+  priority: 0
+  visibility: 1
+  visibleDistanceOverride: 0
+  visibleMinDistanceOverride: 0
+  minDistanceText: 10
+  title: Fire
+  titleVisibility: 0
+  canBeVisited: 1
+  visitedDistanceOverride: 0
+  hideWhenVisited: 0
+  isVisited: 0
+  visitedText: 
+  visitedAudioClip: {fileID: 0}
+  radius: 0
+  iconScale: 1.4
+  iconNonVisited: {fileID: 21300000, guid: 9adb7458a86acf146817cfca16161e25, type: 3}
+  iconVisited: {fileID: 0}
+  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  showPlayModeGizmo: 0
+  clampPosition: 0
+  beaconAudioClip: {fileID: 0}
+  dontDestroyOnLoad: 0
+  heartbeatEnabled: 0
+  heartbeatAudioClip: {fileID: 0}
+  heartbeatDistance: 20
+  heartbeatInterval:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.25
+      inSlope: 0
+      outSlope: 2.75
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 3
+      inSlope: 2.75
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  miniMapVisibility: 0
+  miniMapClampPosition: 0
+  miniMapShowRotation: 0
+  miniMapRotationAngleOffset: 0
+  miniMapIconScale: 1
+  distanceToCameraSQR: 0
+  computedIconScale: {x: 0, y: 0, z: 0}
+  iconAlpha: 0
+  miniMapCurrentIconScale: {x: 0, y: 0, z: 0}
 --- !u!1001 &24695189063238740
 PrefabInstance:
   m_ObjectHideFlags: 0

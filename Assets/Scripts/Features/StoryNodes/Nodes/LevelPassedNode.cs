@@ -1,6 +1,8 @@
-﻿using System;
-using System.Collections;
-using Features.Journey.Factories;
+﻿using System.Collections;
+using Features.Persistence.Services;
+using FSM;
+using FSM.Data;
+using FSM.States;
 using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
@@ -13,7 +15,8 @@ namespace Features.StoryNodes.Nodes
         [DoNotSerialize] public ControlInput Start;
         [DoNotSerialize] public ControlOutput Complete;
 
-        [Inject] private JourneyControllerFactory _journeyControllerFactory;
+        [Inject] private JourneyProgress _journeyProgress;
+        [Inject] private IStateMachine _stateMachine;
 
         protected override void Definition()
         {
@@ -26,8 +29,11 @@ namespace Features.StoryNodes.Nodes
             yield return Start;
 
             yield return new WaitForSeconds(3);
-            var journeyController = _journeyControllerFactory.GetInstance();
-            journeyController.RequestLevelCompletion();
+
+            var activeStage = _journeyProgress.GetActiveStage();
+            _journeyProgress.MarkStageVisited(activeStage.Id);
+
+            _stateMachine.GoSavePointState(CurtainType.BlackFade);
             
             yield return Complete;
         }

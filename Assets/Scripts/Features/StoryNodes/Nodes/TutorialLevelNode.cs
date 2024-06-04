@@ -25,12 +25,14 @@ namespace Features.StoryNodes.Nodes
         {
             yield return Start;
 
-            var endPointViews = Object.FindObjectsOfType<EndPointView>().ToList();
+            var endPointViews = Object.FindObjectsOfType<EndPointView>(includeInactive: true).ToList();
             
             var canMoveNextNode = false;
             
             foreach (var pointView in endPointViews)
             {
+                pointView.gameObject.SetActive(true);
+                
                 pointView.EndPointReached
                     .AsUnitObservable()
                     .First()

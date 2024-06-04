@@ -1167,7 +1167,7 @@ namespace CompassNavigatorPro {
         public static CompassPro instance {
             get {
                 if (_instance == null) {
-                    _instance = FindActiveObjectOfType(typeof(CompassPro)) as CompassPro;
+                    _instance = FindObjectOfType(typeof(CompassPro)) as CompassPro;
                 }
                 return _instance;
             }

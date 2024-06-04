@@ -1,5 +1,6 @@
 ﻿using System;
 using Features.StoryNodes.Presenters;
+using UnityEngine;
 
 namespace Features.Roadmap.Data
 {
@@ -8,6 +9,8 @@ namespace Features.Roadmap.Data
     {
         public string Id;
         public string SceneName;
+        public Sprite LocationPreviewSprite;
         public NodeScriptPresenter Script;
+        public NodeScriptPresenter LevelPassedScript;
     }
 }

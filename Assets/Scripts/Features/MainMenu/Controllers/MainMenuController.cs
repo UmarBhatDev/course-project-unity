@@ -27,7 +27,7 @@ namespace Features.MainMenu.Controllers
 
             _mainMenuView.PlayButtonPressed += () =>
             {
-                _stateMachine.GoJourney(CurtainType.BlackFade, Close);
+                _stateMachine.GoJourney(curtainType: CurtainType.BlackFade, task: Close);
             };
             
             _mainMenuView.ExitButtonPressed += Application.Quit;

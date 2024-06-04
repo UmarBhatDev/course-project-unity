@@ -97,8 +97,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _graphic: {fileID: 4061935676797212827}
-  _fadeInDuration: 0.5
-  _fadeOutDuration: 6
+  _fadeInDuration: 1
+  _fadeOutDuration: 2
 --- !u!1 &2631523702904676993
 GameObject:
   m_ObjectHideFlags: 0

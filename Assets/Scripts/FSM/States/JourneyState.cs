@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using Bootstrap;
 using Bootstrap.GlobalDisposable.Services;
@@ -10,13 +11,16 @@ using Features.SceneTransitions;
 using Features.SceneTransitions.Factories;
 using FSM.Data;
 using FSM.Interfaces;
+using UnityEngine.Scripting;
 
 namespace FSM.States
 {
+    [Preserve]
     public class JourneyState : IGameState<JourneyState.PayLoad>
     {
         private readonly IStateMachine _stateMachine;
         private readonly JourneyProgress _journeyProgress;
+        private readonly RoadmapRegistry _roadmapRegistry;
         private readonly CurtainViewFactory _curtainViewFactory;
         private readonly JourneyControllerFactory _journeyControllerFactory;
         private readonly GlobalCompositeDisposable _globalCompositeDisposable;
@@ -24,10 +28,12 @@ namespace FSM.States
         private CancellationTokenSource _stateCancellationTokenSource;
 
         public JourneyState(CurtainViewFactory curtainViewFactory, IStateMachine stateMachine,
-            JourneyProgress journeyProgress, JourneyControllerFactory journeyControllerFactory, GlobalCompositeDisposable globalCompositeDisposable)
+            JourneyProgress journeyProgress, JourneyControllerFactory journeyControllerFactory,
+            GlobalCompositeDisposable globalCompositeDisposable, RoadmapRegistry roadmapRegistry)
         {
             _stateMachine = stateMachine;
             _journeyProgress = journeyProgress;
+            _roadmapRegistry = roadmapRegistry;
             _curtainViewFactory = curtainViewFactory;
             _journeyControllerFactory = journeyControllerFactory;
             _globalCompositeDisposable = globalCompositeDisposable;
@@ -40,9 +46,14 @@ namespace FSM.States
             _stateCancellationTokenSource = new CancellationTokenSource();
 
             var curtainType = payload.CurtainOverride ?? CurtainType.BlackFade;
-            
-            var stage = _journeyProgress.GetActiveStage();
-            
+
+            var overrideStage = payload.OverrideActiveStage ?? string.Empty;
+            var isPresentInRoadmap = _roadmapRegistry.Roadmap.Stages.Any(x => x.Id == overrideStage);
+
+            var stage = overrideStage != string.Empty && isPresentInRoadmap
+                ? _roadmapRegistry.Roadmap.Stages.First(x => x.Id == overrideStage)
+                : _journeyProgress.GetActiveStage();
+
             if (stage == null)
             {
                 _stateMachine.GoMainMenu(CurtainType.BlackFade); 
@@ -54,15 +65,16 @@ namespace FSM.States
             try
             {
                 await Play(stage);
-                FinishStage(stage);
 
                 if (!_stateCancellationTokenSource.Token.IsCancellationRequested)
                 {
+                    _journeyProgress.MarkStageVisited(stage.Id);
+
                     stage = _journeyProgress.GetActiveStage();
 
                     if (stage == null)
                     {
-                        _stateMachine.GoMainMenu(CurtainType.NoFadeOut); 
+                        _stateMachine.GoMainMenu(CurtainType.BlackFade); 
                         return;
                     }
                     
@@ -75,12 +87,7 @@ namespace FSM.States
                 if (!stateWasCancelled) throw;
             }
         }
-
-        private void FinishStage(Stage stage)
-        {
-            _journeyProgress.MarkStageVisited(stage.Id);
-        }
-
+        
         private async UniTask Play(Stage stage)
         {
             var journeyController = _journeyControllerFactory.Create(stage);
@@ -96,19 +103,14 @@ namespace FSM.States
                 playCancellation.Cancel();
             }
             
-            journeyController?.Dispose();
+            journeyController.Dispose();
         }
         
         public struct PayLoad
         {
+            public string OverrideActiveStage;
             public AdditionalTask AdditionalAction;
             public CurtainType? CurtainOverride { get; set; }
-
-            public PayLoad(CurtainType curtainOverride, AdditionalTask additionalAction)
-            {
-                CurtainOverride = curtainOverride;
-                AdditionalAction = additionalAction;
-            }
         }
         
         public void Exit()
@@ -119,9 +121,10 @@ namespace FSM.States
     
     public static partial class StateMachineExtensions
     {
-        public static void GoJourney(this IStateMachine stateMachine, CurtainType? curtainType = null, AdditionalTask task = null)
+        public static void GoJourney(this IStateMachine stateMachine, string overrideActiveStage = null, CurtainType? curtainType = null, AdditionalTask task = null)
             => stateMachine.EnterState<JourneyState, JourneyState.PayLoad>(new JourneyState.PayLoad
             {
+                OverrideActiveStage = overrideActiveStage,
                 CurtainOverride = curtainType,
                 AdditionalAction = task
             });
